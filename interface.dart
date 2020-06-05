@@ -20,7 +20,7 @@ abstract class BackgroundWorker {
 
   void send(String name, dynamic message);
 
-  void listen(void Function(dynamic message) onData, {@required String name, void Function() onError, void Function() onDone, bool cancelOnError});
+  void listen(void Function(dynamic message) onData, {@required Map<String, dynamic> context, void Function() onError, void Function() onDone, bool cancelOnError});
 
   void kill(String name);
 }
