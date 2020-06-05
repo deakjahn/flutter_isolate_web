@@ -13,7 +13,7 @@ void main() {
     // Executed every time data is received from the spawned worker/isolate.
     onReceive: setCounter,
     // Executed once when spawned worker/isolate is ready for communication.
-    onInitialized: () => isolates.send(counter, to: "counter")
+    onInitialized: () => worker.sendTo("counter", counter),
   );
 }
 
@@ -31,6 +31,6 @@ void entryPoint(String name) {
   // Triggered every time data is received from the main app.
   worker.listen((count) {
     // Add one to the count and send the new value back to the main app.
-    worker.send(name, ++count);
+    worker.sendFrom(name, ++count);
   }, name: name);
 }
