@@ -16,9 +16,11 @@ abstract class BackgroundWorker {
 
   List<String> get names => [];
 
-  void spawn<T>(void Function(String) mainFunction, {@required String name, void Function() onInitialized, void Function(T message) onReceive});
+  void spawn(void Function(Map<String, dynamic>) mainFunction, {@required String name, void Function() onInitialized, void Function(Map<String, dynamic> message) onReceive});
 
-  void send(String name, dynamic message);
+  void sendTo(String name, dynamic message);
+
+  void sendFrom(String name, dynamic message);
 
   void listen(void Function(dynamic message) onData, {@required Map<String, dynamic> context, void Function() onError, void Function() onDone, bool cancelOnError});
 
