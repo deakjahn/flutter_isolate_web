@@ -66,7 +66,7 @@ void onInitialized() {
 }
 ```
 
-`onReceive` is the major messaging mechanism. Pass the `worker` and the unique name to the isolate/worker so that it can store it
+`onReceive` is the main messaging mechanism. Pass the `worker` and the unique name to the isolate/worker so that it can store it
 and send its messages back:
 
 ```dart
