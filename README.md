@@ -33,7 +33,10 @@ worker.spawn(
 );
 ```
 
-`_start()` is just a function taking a `String` argument (the name of the isolate/worker). Unlike with standard isolates,
+You can start any amount of workers, just give a unique name to all so that you can reference them later when sending
+or receiving messages.
+
+`_start()` is just a function taking a `String` argument (the unique name of the isolate/worker). Unlike with standard isolates,
 there is no limitation for it to be a top-level or static function, anything will do, even an inline anonymous one.
 The most usual activity here is to start listening to messages the isolate/worker will receive from the main app
 (the actual message structure is completely up to you, this is just an example):
