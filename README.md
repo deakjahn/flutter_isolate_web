@@ -70,7 +70,7 @@ this is the main entry point of the worker/isolate code. `onInitialized()` and t
 this is where the main app receives messages from the worker/isolate.
 
 `onReceive` is the main messaging mechanism. Pass the `worker` and the unique name (returned to you as `context['name']`)
-to the isolate/worker so that it can store it and send its messages back:
+to the isolate/worker so that it can store it and use it to send its messages back:
 
 ```dart
 worker.send('unique-name', message);
