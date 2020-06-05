@@ -12,8 +12,8 @@ BackgroundWorker getWorker() => BackgroundWorkerIo();
 
 class BackgroundWorkerIo implements BackgroundWorker {
   final IsolateHandler _isolates = IsolateHandler();
-  static final _messengers = <String, HandledIsolateMessenger>{};
-  static final _mainFunctions = <String, void Function(String)>{};
+  static final Map<String, HandledIsolateMessenger> _messengers = {};
+  static final Map<String, void Function(String)> _mainFunctions = {};
 
   @override
   List<String> get names => _isolates.isolates.keys.toList();
