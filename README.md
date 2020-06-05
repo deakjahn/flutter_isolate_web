@@ -13,3 +13,54 @@ It depends on:
 the isolates with communication already in place,
 
 * [js](https://pub.dev/packages/js), this is what provides the connection to JavaScript.
+
+## Usage
+
+Create a worker first:
+
+```dart
+final worker = BackgroundWorker();
+```
+
+and start it when needed:
+
+```dart
+worker.spawn(
+  _start,
+  name: widget.item.GUID,
+  onInitialized: onInitialized,
+  onReceive: (message) {
+    ...
+  },
+);
+```
+
+`_start()` is just a function taking a `String` argument (the name of the isolate/worker). Unlike with standard isolates,
+there is no limitation for it to be a top-level or static function, anything will do, even an inline anonymous one.
+The most usual activity here is to start listening to messages the isolate/worker will send while working:
+
+```dart
+void _start(String name) {
+  worker.listen((args) {
+  }, name: name);
+}
+```
+
+```dart
+void _start(String name) {
+  worker.listen((args) {
+  }, name: name);
+}
+```
+
+When the isolate/worker actually gets initialized, we will also receive an event. You might simply use this to send
+a message to the worker to start the actual work (the actual message structure is completely up to you, this is just an example):
+
+```dart
+void onInitialized() {
+  worker.send('name', {
+    'command': 'start',
+    'data': ...,
+  });
+}
+```
