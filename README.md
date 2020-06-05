@@ -69,8 +69,8 @@ There is an important difference between the two that must be understood. `doWor
 this is the main entry point of the worker/isolate code. `onInitialized()` and the other callback run in the main app,
 this is where the main app receives messages from the worker/isolate.
 
-`onReceive` is the main messaging mechanism. Pass the `worker` and the unique name to the isolate/worker so that it can store it
-and send its messages back:
+`onReceive` is the main messaging mechanism. Pass the `worker` and the unique name (returned to you as `context['name']`)
+to the isolate/worker so that it can store it and send its messages back:
 
 ```dart
 worker.send('unique-name', message);
