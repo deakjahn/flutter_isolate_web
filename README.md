@@ -65,3 +65,26 @@ void onInitialized() {
   });
 }
 ```
+
+`onReceive` is the major messaging mechanism. Pass the `worker` and the unique name to the isolate/worker so that it can store it
+and send its messages back:
+
+```dart
+worker.send('unique-name', message);
+
+void onReceive(T message) {
+  //...
+}
+```
+
+If you need to kill the worker/isolate, use:
+
+```dart
+worker.kill('unique-name');
+```
+
+To kill all of them, use the `names` list:
+
+```dart
+for (String name in worker.names) worker.kill(name);
+```
