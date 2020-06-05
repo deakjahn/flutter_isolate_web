@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 DE¡K JAHN G·bor.
+ * Copyright (C) 2020 DE√ÅK JAHN G√°bor.
  * All rights reserved.
  */
 
@@ -28,10 +28,9 @@ void setCounter(int count) {
 
 // This function happens in the worker/isolate.
 void entryPoint(String name) {
-  // Triggered every time data is received from the main isolate.
+  // Triggered every time data is received from the main app.
   worker.listen((count) {
-    // Add one to the count and send the new value back to the main
-    // isolate.
+    // Add one to the count and send the new value back to the main app.
     worker.send(name, ++count);
   }, name: name);
 }
