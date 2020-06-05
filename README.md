@@ -66,8 +66,8 @@ void onInitialized() {
 ```
 
 There is an important difference between the two that must be understood. `doWork()` runs in the worker/isolate,
-this is the main entry point of the worker/isolate code. `onInitialized()` and the other callback run in the main app,
-this is where the main app receives messages from the worker/isolate.
+this is the main entry point of the worker/isolate code. `onInitialized()` and the other callbacks run in the main app,
+this is where the main app receives messages from the workers/isolates.
 
 `onReceive` is the main messaging mechanism. Pass the `worker` and the unique name (returned to you as `context['name']`)
 to the isolate/worker so that it can store it and use it to send its messages back:
