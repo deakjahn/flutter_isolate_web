@@ -57,7 +57,7 @@ a message to the worker to start the actual work (the actual message structure i
 
 ```dart
 void onInitialized() {
-  worker.send('some-unique-name', {
+  worker.sendTo('some-unique-name', {
     // tell the worker to start its job
     'command': 'start',
     'data': ...,
@@ -73,7 +73,7 @@ this is where the main app receives messages from the workers/isolates.
 to the isolate/worker so that it can store it and use it to send its messages back:
 
 ```dart
-worker.send('unique-name', message);
+worker.sendFrom('unique-name', message);
 
 void onReceive(T message) {
   //...
