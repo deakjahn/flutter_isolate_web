@@ -27,11 +27,9 @@ and start it when needed:
 ```dart
 worker.spawn(
   _start,
-  name: widget.item.GUID,
+  name: 'some-unique-name',
   onInitialized: onInitialized,
-  onReceive: (message) {
-    ...
-  },
+  onReceive: onReceive,
 );
 ```
 
