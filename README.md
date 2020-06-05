@@ -26,7 +26,7 @@ and start it when needed:
 
 ```dart
 worker.spawn(
-  _start,
+  doWork,
   name: 'some-unique-name',
   onInitialized: onInitialized,
   onReceive: onReceive,
@@ -36,13 +36,13 @@ worker.spawn(
 You can start any amount of workers, just give a unique name to all so that you can reference them later when sending
 or receiving messages.
 
-`_start()` is just a function taking a `String` argument (the unique name of the isolate/worker). Unlike with standard isolates,
+`doWork()` is just a function taking a `String` argument (the unique name of the isolate/worker). Unlike with standard isolates,
 there is no limitation for it to be a top-level or static function, anything will do, even an inline anonymous one.
 The most usual activity here is to start listening to messages the isolate/worker will receive from the main app
 (the actual message structure is completely up to you, this is just an example):
 
 ```dart
-void _start(String name) {
+void doWork(String name) {
   worker.listen((args) {
     switch (args['command']) {
       case 'start':
@@ -65,6 +65,10 @@ void onInitialized() {
   });
 }
 ```
+
+There is an important difference between the two that must be understood. `doWork()` runs in the worker/isolate,
+this is the main entry point of the worker/isolate code. `onInitialized()` and the other callback run in the main app,
+this is where the main app receives messages from the worker/isolate.
 
 `onReceive` is the main messaging mechanism. Pass the `worker` and the unique name to the isolate/worker so that it can store it
 and send its messages back:
