@@ -12,6 +12,7 @@ BackgroundWorker getWorker() => BackgroundWorkerIo();
 
 class BackgroundWorkerIo implements BackgroundWorker {
   final _isolates = IsolateHandler();
+  final Map<String, HandledIsolateMessenger> _messengers = {};
 
   @override
   List<String> get names => _isolates.isolates.keys.toList();
@@ -27,8 +28,16 @@ class BackgroundWorkerIo implements BackgroundWorker {
   }
 
   @override
-  void send(String name, dynamic message) {
+  void sendTo(String name, dynamic message) {
     _isolates.send(message, to: name);
+  }
+
+  @override
+  void sendFrom(String name, dynamic message) {
+    final messenger = _messengers[name];
+    assert(messenger != null, 'Unknown name');
+
+    messenger.send(message);
   }
 
   @override
