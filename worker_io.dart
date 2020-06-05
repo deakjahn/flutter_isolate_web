@@ -11,7 +11,7 @@ import 'interface.dart';
 BackgroundWorker getWorker() => BackgroundWorkerIo();
 
 class BackgroundWorkerIo implements BackgroundWorker {
-  final IsolateHandler _isolates = IsolateHandler();
+  final _isolates = IsolateHandler();
 
   @override
   List<String> get names => _isolates.isolates.keys.toList();
