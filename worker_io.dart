@@ -12,27 +12,18 @@ BackgroundWorker getWorker() => BackgroundWorkerIo();
 
 class BackgroundWorkerIo implements BackgroundWorker {
   final IsolateHandler _isolates = IsolateHandler();
-  static final Map<String, HandledIsolateMessenger> _messengers = {};
-  static final Map<String, void Function(String)> _mainFunctions = {};
 
   @override
   List<String> get names => _isolates.isolates.keys.toList();
 
   @override
-  void spawn<T>(void Function(String) mainFunction, {@required String name, void Function() onInitialized, void Function(T message) onReceive}) {
-    _mainFunctions[name] = mainFunction;
+  void spawn<T>(void Function(Map<String, dynamic>) mainFunction, {@required String name, void Function() onInitialized, void Function(T message) onReceive}) {
     _isolates.spawn(
-      BackgroundWorkerIo._start,
+      mainFunction,
       name: name,
       onInitialized: onInitialized,
       onReceive: onReceive,
     );
-  }
-
-  static void _start(Map<String, dynamic> context) {
-    String name = context['name'] as String;
-    _messengers[name] = HandledIsolate.initialize(context);
-    _mainFunctions[name]?.call(name);
   }
 
   @override
@@ -41,11 +32,8 @@ class BackgroundWorkerIo implements BackgroundWorker {
   }
 
   @override
-  void listen(void Function(dynamic message) onData, {@required String name, void Function() onError, void Function() onDone, bool cancelOnError}) {
-    final messenger = _messengers[name];
-    assert(messenger != null, 'Unknown name');
-
-    messenger.listen(
+  void listen(void Function(dynamic message) onData, {@required Map<String, dynamic> context, void Function() onError, void Function() onDone, bool cancelOnError}) {
+    HandledIsolate.initialize(context).listen(
       onData,
       onError: onError,
       onDone: onDone,
