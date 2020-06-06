@@ -52,7 +52,7 @@ void doWork(Map<String, dynamic> context) {
 }
 ```
 
-When the isolate/worker actually gets initialized, the main app will be notofied. You might simply use this to send a message
+When the isolate/worker actually gets initialized, the main app will be notified. You might simply use this to send a message
 back to the worker to start the actual work (the actual message structure is completely up to you, this is just an example):
 
 ```dart
