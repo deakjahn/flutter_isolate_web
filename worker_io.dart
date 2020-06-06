@@ -18,9 +18,9 @@ class BackgroundWorkerIo implements BackgroundWorker {
   List<String> get names => _isolates.isolates.keys.toList();
 
   @override
-  void spawn<T>(void Function(Map<String, dynamic>) mainFunction, {@required String name, void Function() onInitialized, void Function(T message) onReceive}) {
+  void spawn<T>(void Function(Map<String, dynamic>) entryPoint, {@required String name, void Function() onInitialized, void Function(T message) onReceive}) {
     _isolates.spawn(
-      mainFunction,
+      entryPoint,
       name: name,
       onInitialized: onInitialized,
       onReceive: onReceive,
