@@ -3,7 +3,7 @@
 The title is a misnomer. Of course, there are no isolates in Flutter Web. What this code provides
 is actually a unified interface to isolates *and* web workers so that each platform can use its own.
 It's not a package on pub.dev and it won't be because you can't use it out of the box just like
-a regular package or plugin. You have to copy it into your own code and modify it in a few places.
+a regular package or plugin. You have to copy it into your own code and modify it to suit your needs.
 
 ## Dependencies
 
@@ -52,8 +52,8 @@ void doWork(Map<String, dynamic> context) {
 }
 ```
 
-When the isolate/worker actually gets initialized, we will also receive an event. You might simply use this to send
-a message to the worker to start the actual work (the actual message structure is completely up to you, this is just an example):
+When the isolate/worker actually gets initialized, the main app will be notofied. You might simply use this to send a message
+back to the worker to start the actual work (the actual message structure is completely up to you, this is just an example):
 
 ```dart
 void onInitialized() {
