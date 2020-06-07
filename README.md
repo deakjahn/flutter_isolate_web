@@ -29,7 +29,7 @@ worker.spawn(
   doWork,
   name: 'some-unique-name',
   onInitialized: onInitialized,
-  onReceive: onReceive,
+  onFromWorker: onReceive,
 );
 ```
 
@@ -66,15 +66,21 @@ void onInitialized() {
 ```
 
 There is an important difference between the two that must be understood. `doWork()` runs in the worker/isolate,
-this is the main entry point of the worker/isolate code. `onInitialized()` and the other callbacks run in the main app,
+this is the main entry point of the worker/isolate code. `onInitialized` and `onFromWorker` run in the main app,
 this is where the main app receives messages from the workers/isolates.
 
-`onReceive` is the main messaging mechanism. Pass the `worker` and the unique name (returned to you as `context['name']`)
-to the isolate/worker so that it can store it and use it to send its messages back:
+This second is the main messaging mechanism. Make sure the isolate/worker also knows the main `worker` object
+and its own unique name (the name was returned to the `entryPoint()` as `context['name']`) because it needs those
+to send its messages back:
 
 ```dart
+// isolate/worker send to main app:
 worker.sendFrom('unique-name', message);
 
+// main app sends to isolate/worker:
+worker.sendTo('unique-name', message);
+
+// main app receives from isolate/worker:
 void onReceive(T message) {
   //...
 }
