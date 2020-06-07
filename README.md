@@ -91,3 +91,22 @@ To kill all of them, use the `names` list:
 ```dart
 for (String name in worker.names) worker.kill(name);
 ```
+
+## Web
+
+Everything described above works on mobile with isolates. However, the Flutter Web side is not that nice yet.
+
+If you have the JavaScript code you want to run when compiling your app for the web, it works. Call your code with
+the `importScripts()` in `worker_web.dart` and that's all. You can even do away with all that `createObjectUrlFromBlob`
+stuff and construct the `Worker` directly with the JS file from your app assets or downloaded from a CDN. The same applies
+if your isolate code from your mobile app is simple enough so that you can and want to replicate it in JavaScript.
+
+The missing link in the chain is if you want to use the *same* Dart code you used for your isolate in your web worker.
+If your code is free from dependencies, you could get away with simple compiling it with:
+
+    dart2js -o worker.js worker.dart
+
+copying it to your assets and loading it. But we are unable to simply re-use our existing Dart code, even if it is actually
+compiled to JavaScript, anyway. There's no way to compile part of your app (your isolate/worker) into a separate file and
+to include it separately for the worker to use, and, by obvious limitation of web workers, we can't simply call into our
+main app code from the worker, either.
