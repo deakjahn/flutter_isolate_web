@@ -32,7 +32,8 @@ class BackgroundWorkerWeb implements BackgroundWorker {
     final worker = _workers[name] = Worker(codeUrl);
     _messengers[name] = onFromWorker;
     worker.onMessage.listen((event) {
-      onFromWorker?.call(event.data);
+      final args = Map<String, dynamic>.from(event.data);
+      onFromWorker?.call(args);
     });
     onInitialized?.call();
   }
