@@ -74,7 +74,7 @@ and its own unique name (the name was returned to the `entryPoint()` as `context
 to send its messages back:
 
 ```dart
-// isolate/worker send to main app:
+// isolate/worker sends to main app:
 worker.sendFrom('unique-name', message);
 
 // main app sends to isolate/worker:
