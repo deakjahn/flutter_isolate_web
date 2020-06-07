@@ -18,12 +18,14 @@ class BackgroundWorkerIo implements BackgroundWorker {
   List<String> get names => _isolates.isolates.keys.toList();
 
   @override
-  void spawn<T>(void Function(Map<String, dynamic>) entryPoint, {@required String name, void Function() onInitialized, void Function(T message) onReceive}) {
+  void spawn(void Function(Map<String, dynamic>) entryPoint, {@required String name, void Function() onInitialized, void Function(Map<String, dynamic> message) onFromWorker}) {
+    assert(entryPoint != null);
+
     _isolates.spawn(
       entryPoint,
       name: name,
       onInitialized: onInitialized,
-      onReceive: onReceive,
+      onReceive: onFromWorker,
     );
   }
 
@@ -41,9 +43,13 @@ class BackgroundWorkerIo implements BackgroundWorker {
   }
 
   @override
-  void listen(void Function(dynamic message) onData, {@required Map<String, dynamic> context, void Function() onError, void Function() onDone, bool cancelOnError}) {
-    HandledIsolate.initialize(context).listen(
-      onData,
+  void listen(void Function(dynamic message) onFromMain, {@required Map<String, dynamic> context, void Function() onError, void Function() onDone, bool cancelOnError}) {
+    assert(onFromMain != null);
+
+    String name = context['name'];
+    final messenger = _messengers[name] = HandledIsolate.initialize(context);
+    messenger.listen(
+      onFromMain,
       onError: onError,
       onDone: onDone,
       cancelOnError: cancelOnError,
