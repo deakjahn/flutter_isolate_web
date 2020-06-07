@@ -18,7 +18,7 @@ class BackgroundWorkerWeb implements BackgroundWorker {
   final Map<String, String> _workerUrls = {};
   final Map<String, void Function(Map<String, dynamic> message)> _messengers = {};
 
-  static String source = '// entryPoint();';
+  static String source = 'importScripts('sample.js');// entryPoint();';
 
   @override
   List<String> get names => _workers.keys.toList();
