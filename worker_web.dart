@@ -84,6 +84,7 @@ class BackgroundWorkerWeb implements BackgroundWorker {
     if (onError != null)
       worker.onError.listen((event) {
         onError();
+        if (cancelOnError) kill(name);
       });
   }
 
