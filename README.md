@@ -116,3 +116,10 @@ copying it to your assets and loading it. But we are unable to simply re-use our
 compiled to JavaScript, anyway. There's no way to compile part of your app (your isolate/worker) into a separate file and
 to include it separately for the worker to use, and, by obvious limitation of web workers, we can't simply call into our
 main app code from the worker, either.
+
+### Intermediate solution for the web
+
+The package also has a `worker_async.dart` file. This is an async solution to the problem. It implements the same interface,
+so it can be used as is to make the isolate/worker scheme work on the web. It won't be a real web worker, though, it won't run
+in parallel but it works. These "fake" workers will be called in the usual asnychronous way. While not yet the real McCoy,
+it's a functional replacement.
