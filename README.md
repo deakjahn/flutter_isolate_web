@@ -108,7 +108,7 @@ stuff and construct the `Worker` directly with the JS file from your app assets 
 if your isolate code from your mobile app is simple enough so that you can and want to replicate it in JavaScript.
 
 The missing link in the chain is if you want to use the *same* Dart code you used for your isolate in your web worker.
-If your code is free from dependencies, you could get away with simple compiling it with:
+If your code is free from dependencies, you could get away with simply compiling it with:
 
     dart2js --libraries-spec=$HOME/flutter/bin/cache/flutter_web_sdk/libraries.json -o worker.js worker.dart
 
