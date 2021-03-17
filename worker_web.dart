@@ -18,7 +18,8 @@ class BackgroundWorkerWeb implements BackgroundWorker {
   final Map<String, String> _workerUrls = {};
   final Map<String, void Function(Map<String, dynamic> message)> _messengers = {};
 
-  static String source = 'importScripts('sample.js');// entryPoint();';
+  static String source =
+      "importScripts(location.origin + '/sample.js');// entryPoint();";
 
   /// Returns the names of all running workers.
   @override
@@ -74,7 +75,11 @@ class BackgroundWorkerWeb implements BackgroundWorker {
   /// Workers can use this function to set up their listener for messages coming from the main app.
   /// This is normally called from their [entryPoint] function, passing the [context] that function receives.
   @override
-  void listen(void Function(dynamic message) onFromMain, {@required Map<String, dynamic> context, void Function() onError, void Function() onDone, bool cancelOnError}) {
+  void listen(void Function(dynamic message) onFromMain,
+      {@required Map<String, dynamic> context,
+      void Function() onError,
+      void Function() onDone,
+      bool cancelOnError}) {
     assert(onFromMain != null);
 
     String name = context['name'];
